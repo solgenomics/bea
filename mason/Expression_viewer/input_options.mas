@@ -21,9 +21,6 @@ $input_gene => ()
           <input class="tissue_filter" name="tissue_filter" style="display:none;"/>
           <input class="condition_filter" name="condition_filter" style="display:none;"/>
         </form>
-        <br/><br/>
-		For Reference Only
-		<& /Expression_viewer/complete_compound_select.mas &>
       </div>
       
       <!--div class="col-sm-4 col-md-4 col-lg-4">
