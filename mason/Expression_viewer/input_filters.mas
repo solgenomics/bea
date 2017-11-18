@@ -68,7 +68,7 @@ $delete_enabled => ()
     </div>
     -->
 
-    <div class="col-sm-4 col-md-4 col-lg-4">
+    <div class="col-sm-6 col-md-6 col-lg-6">
       <div style="text-align: center; width=100%">Column Numbers</div>
       
       <select multiple id="organ_part_col" class="form-control wizard_select" size="10"></select>
@@ -76,7 +76,7 @@ $delete_enabled => ()
       <button class="select_none btn btn-default pull-right">Unselect</button>
     </div>
       
-    <div class="col-sm-4 col-md-4 col-lg-4">
+    <div class="col-sm-6 col-md-6 col-lg-6">
       <div style="text-align: center; width=100%">Row Numbers</div>
 
       <select multiple id="tissue_col" class="form-control wizard_select" size="10"></select>
