@@ -1,0 +1,35 @@
+
+<!-- project options info dialog -->
+<div class="modal fade" id="projects_options_help" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Project Options</h4>
+      </div>
+      <div class="modal-body">
+        <ul class="text-left">
+          <li>
+            <b>Opt1:</b> Correlate metabolite and enzyme data for all accessions across all conditions: 'age of plant', 'time of day collected', and 'tissue'. Does not include agronomic data because the agronomic data does not include 'tissue' or 'time of day collected' conditions.
+          </li>
+          <br/>
+          <li>
+            <b>Opt2:</b> Correlate metabolite, enzyme, and agronomic data for all accessions across the following conditions: 'age of plant', and 'tissue'. To accommodate the agronomic data, 'time of day collected' is not represented, and the metabolite and enzyme data is paired with its 'tissue'.
+          </li>
+          <br/>
+          <li>
+            <b>Opt3:</b> Correlate metabolite, enzyme, and agronomic data for all accessions across the following specific conditions: 'week_16' for metabolites and enzymes, 'week_16' for agronomic data, and 'tissue'. As in Opt2 to accommodate the agronomic data, 'time of day collected' is not represented, and the metabolite and enzyme data is paired with its 'tissue'.
+          </li>
+          <br/>
+          <li>
+            <b>Opt4:</b> Correlate metabolite, enzyme, and agronomic data for all accessions across the following specific conditions: 'week_16' for metabolites and enzymes, 'week_52' for agronomic data, and 'tissue'. As in Opt2 to accommodate the agronomic data, 'time of day collected' is not represented, and the metabolite and enzyme data is paired with its 'tissue'.
+          </li>
+          <br/>
+          <li>
+            <b>Opt5:</b> Correlate metabolite, enzyme, and agronomic data for all accessions EXCEPT TMEB419 across the following specific conditions: 'week_16' for metabolites and enzymes, 'week_52' for agronomic data, and 'tissue'. As in Opt2 to accommodate the agronomic data, 'time of day collected' is not represented, and the metabolite and enzyme data is paired with its 'tissue'. TMEB419 is excluded because agronomic traits were not collected for it in week_52 in some projects.
+          </li>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

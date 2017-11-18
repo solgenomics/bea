@@ -1,0 +1,265 @@
+<%args>
+$input_gene => ()
+</%args>
+
+<div class="modal fade" id="gene_id_help" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Expression Search</h4>
+      </div>
+      <div class="modal-body">
+        <p>Paste a compound or gene name (Eg: <% $input_gene %>).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="blast_help" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">BLAST Info</h4>
+      </div>
+      <div class="modal-body">
+        <p>Paste a fasta sequence, a gene ID or just a sequence.</p>
+        <p>Both nucleotide or protein sequences are valid.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="custom_list_help" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Custom List Info</h4>
+      </div>
+      <div class="modal-body">
+        <p>Paste a list of gene IDs.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="blast_input_dialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">BLAST Search</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label for="blast_sequence">Paste a sequence or gene ID <span id="blast_i2" class="info_icon">i</span></label>
+          <textarea id="blast_sequence" class="form-control" rows="12">
+>Solyc12g096500.1.1 CONSTANS-like protein
+MGTENWSLTAKLCDSCKTSPATVFCRADSAFLCLGCDCKIHAANKLASRHARVWVCEVCEQAPASVTCKADAAALCVTCDRDIHSANPLARRHERFPVVPFYDFAVAKSHGGGDTDADAVDDEKYFDSTNENPSQPEEEAEAASWILPTPKEGTDQYKSADYLFNDMDSYLDIDLMSCEQKPHILHHQQHQHNHYSSDGVVPVQNNNETTHLPGPVVDGFPTYELDFTGSKPYMYNFTSQSISQSVSSSSLDVGVVPDHSTMTDVSNTFVMNSSSGAIAGAGADVVPNAVSGLDREARVMRYREKRKNRKFEKTIRYASRKAYAETRPRIKGRFAKRTETEIDSLITVDASYGVVPSF
+          </textarea>
+        </div>
+  
+        <div class="row text-left">
+          <div class="col-sm-3 col-md-3 col-lg-3">
+            Hit number 
+          </div>
+          <div class="col-sm-2 col-md-2 col-lg-2">
+            <select id="blast_hits">
+              <option value='10'>10</option>
+              <option value='20' selected>20</option>
+              <option value='40'>40</option>
+              <option value='60'>60</option>
+            </select>
+          </div>
+    
+          <div class="col-sm-7 col-md-7 col-lg-7">
+            <div class="checkbox" style="margin:0px">
+              <label><input type="checkbox" id="blast_alignment"> Show Alignment</label>
+            </div>
+          </div>
+        
+        </div>
+  
+        <div class="row text-left">
+          <div class="col-sm-3 col-md-3 col-lg-3">
+            <i>e</i> value 
+          </div>
+          <div class="col-sm-2 col-md-2 col-lg-2">
+            <select id="blast_eval">
+              <option value='10'>10</option>
+              <option value='1e-3' selected>1e-3</option>
+              <option value='1e-6'>1e-6</option>
+              <option value='1e-9'>1e-9</option>
+              <option value='1e-12'>1e-12</option>
+            </select>
+          </div>
+    
+          <div class="col-sm-7 col-md-7 col-lg-7">
+            <div class="checkbox" style="margin:0px">
+              <label><input type="checkbox" id="blast_filter"> Filter low complexity</label>
+            </div>
+          </div>
+  
+        </div>
+  
+        <button id="blast_button" class="btn btn-primary pull-right">BLAST</button>
+        <br>
+        <br>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- BLAST result dialog -->
+<div class="modal fade" id="blast_div_dialog" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">BLAST Results</h4>
+      </div>
+      <div class="modal-body">
+  
+      	<form id="blast_form" method="post" enctype="multipart/form-data">
+      		<div id="blast_res_div">
+      			<input id="selectall" type='checkbox' style="margin-left: 7px;">&nbsp;Select all
+      			<table id="blast_res_table" class="table table-striped table-bordered"></table>
+      		</div>
+          <input class="corr_filter" name="correlation_filter" style="display:none;"/>
+          <input class="organism_filter" name="organism_filter" style="display:none;"/>
+          <input class="organ_filter" name="organ_filter" style="display:none;"/>
+          <input class="stage_filter" name="stage_filter" style="display:none;"/>
+          <input class="tissue_filter" name="tissue_filter" style="display:none;"/>
+      		<br>
+      		<button class="btn btn-primary pull-right" type="submit" form="blast_form" formaction="/expression_viewer/output" formmethod="post" formenctype="multipart/form-data">Get Expression</button>
+      	</form>
+      	<br>
+      	<br>
+      	<!-- BLAST alignment dialog -->
+      	<div id="blast_aln_div" style="display:none;"><p id="blast_aln_p"></p></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Custom list input dialog -->
+<div class="modal fade" id="custom_input_dialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Custom List</h4>
+      </div>
+      <div class="modal-body">
+
+      	<form id="custom_list_form" method="post" enctype="multipart/form-data">
+        	<label for="custom_list">Paste a list of gene IDs</label>
+
+<textarea id="custom_list" class="form-control" rows="10" name="input_gene" style="margin-top: 5px;">
+Solyc04g008460
+Solyc01g102660
+</textarea>
+          
+          <!-- <div class="checkbox pull-left">
+            <label class="text-muted"><input type="checkbox" name="hotspot" disabled> Show cumulative expression</label>
+          </div> -->
+        
+      		<input class="corr_filter" name="correlation_filter" style="display:none;"/>
+      		<input class="organism_filter" name="organism_filter" style="display:none;"/>
+      		<input class="organ_filter" name="organ_filter" style="display:none;"/>
+      		<input class="stage_filter" name="stage_filter" style="display:none;"/>
+      		<input class="tissue_filter" name="tissue_filter" style="display:none;"/>
+          
+          <br>
+      		<button id="custom_list_button" class="btn btn-primary pull-right" type="submit" form="custom_list_form" formaction="/expression_viewer/output" formmethod="post" formenctype="multipart/form-data">Get Expression</button>
+      		<br>
+      		<br>
+      	</form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- parameters info dialog -->
+<div class="modal fade" id="parameters_help" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Parameters and Filters</h4>
+      </div>
+      <div class="modal-body">
+        <ul class="text-left">
+          <li>
+            Select the data set (Project) you want to query.
+          </li>
+          <li>
+            Set the minimum correlation value (0.65 - 1.0) to display co-expressed genes with similar expression profiles.<br>
+            <a href="/help/input_params/#cor_filter" target="blank">Read help page</a> for more information.
+          </li>
+          <li>
+            Filter the conditions to display: Stage, tissues, treatments, etc. 
+            Note that when no conditions are selected for filtering all the samples from the data set will be display.<br>
+            <a href="/help/input_params/#cond_sel" target="blank">Read help page</a> for more information.
+          </li>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  no input gene modal -->
+<div class="modal fade" id="no_gene_modal" role="dialog">
+  <div class="modal-dialog modal-sm">
+    
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="text-align: center;">ERROR</h4>
+      </div>
+      <div class="modal-body">
+        <div style="text-align: center;">
+          <p>No Input Gene</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+
+<!-- output dialogs -->
+<!-- working wheel modal -->
+<div class="modal fade" id="loading_modal" role="dialog">
+  <div class="modal-dialog">
+    
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="text-align: center;">Loading ...</h4>
+      </div>
+      <div class="modal-body">
+        <div style="text-align: center;">
+          <p>The images are now downloading. This may take a minute.</p>
+          <img src=/static/images/wheel.gif>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>

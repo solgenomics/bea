@@ -1,0 +1,66 @@
+<%args>
+$organism => ()
+$organism_description => ()
+$project_name => ()
+$project_description => ()
+$project_contact => ()
+
+$layer_description => ()
+$exp_tables => ()
+</%args>
+
+<center>
+  <h2><% $project_name %></h2>
+  <br>
+
+  <div style="width:900px; text-align: left;">
+    <p><b>Genotype: </b><% $organism %>
+    <p><b>Description: </b><% $project_description %></p>
+    <p><b>Contact: </b><% $project_contact %></p>
+    <% $layer_description %><br>
+    <% $exp_tables %><br>
+  </div>
+  
+  <div class="bottom_section">
+  </div>
+</center>
+
+
+<style>
+
+.bottom_section {
+  margin-bottom:100px;
+  margin-top:100px;
+  position: relative;
+}
+
+.images_div {
+  display: block;
+  height:500px;
+}
+
+#color_legend {
+	width:400px;
+  padding-top:150px;
+}
+
+#color_legend li {
+	display:block;
+	height:40px;
+  font-size: 20px;
+}
+
+.legend_sq {
+	float:left;
+	width:25px;
+	height:25px;
+	border-style:solid;
+	border-width:2px;
+	border-color:#ccc;
+	border-radius:5px;
+	margin-right:10px;
+}
+
+</style>
+
+
