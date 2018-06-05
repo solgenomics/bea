@@ -25,7 +25,7 @@ sgn_session_id=${19}
 user_name=${20}
 search_params_description=${21}
 
-wget --no-check-certificate --output-document=${processing_file_dir}/phenotype_download.csv "${host_address}/breeders/trials/phenotype/download?trial_list=${trial_ids}&format=csv&timestamp=0&trait_list=${trait_ids}&accession_list=${accession_ids}&dataLevel=plot&search_type=complete&sgn_session_id=${sgn_session_id}&has_header=0&include_row_and_column_numbers=1"
+wget --no-check-certificate --output-document=${processing_file_dir}/phenotype_download.csv "${host_address}/breeders/trials/phenotype/download?trial_list=${trial_ids}&format=csv&timestamp=0&trait_list=${trait_ids}&accession_list=${accession_ids}&dataLevel=plot&search_type=complete&sgn_session_id=${sgn_session_id}&has_header=0"
 
 perl ${root_dir}/bea/bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i ${processing_file_dir}/phenotype_download.csv -o ${processing_file_dir}/lucy.tsv -c ${processing_file_dir}/pre_corr.tsv -f ${processing_file_dir}/corr.tsv -p ${processing_file_dir}/project.txt -d ${processing_file_dir}/desc.tsv -v ${export_type} -n ${project_name} -t ${processing_file_dir} -u ${user_name} -s ${search_params_description}
 

@@ -87,7 +87,7 @@ my $col_max = scalar(@columns)-1;
 
 my @data_out;
 my @traits;
-for my $col ( 17 .. $col_max) {
+for my $col ( 30 .. $col_max) {
     push @traits, $columns[$col];
 }
 
@@ -112,11 +112,11 @@ while ( my $row = <$fh> ){
     } else {
         die "Could not parse line $row\n";
     }
-    
-    my $accession_name = $columns[7];
-    my $trial_name = $columns[2];
-    my $project_design = $columns[3];
-    my $project_location = $columns[5];
+
+    my $accession_name = $columns[18];
+    my $trial_name = $columns[5];
+    my $project_design = $columns[7];
+    my $project_location = $columns[16];
     my $project_year = $columns[0];
 
     if (!exists($unique_designs{$project_design})){
@@ -137,15 +137,15 @@ while ( my $row = <$fh> ){
     }
 
     #print STDERR $accession_name."\n";
-    my $plot_name = $columns[11];
-    my $rep_number = $columns[12];
-    my $block_number = $columns[13];
-    my $plot_number = $columns[14];
-    my $row_number = "Row_".$columns[15];
-    my $col_number = "Col_".$columns[16];
+    my $plot_name = $columns[22];
+    my $rep_number = $columns[23];
+    my $block_number = $columns[24];
+    my $plot_number = $columns[25];
+    my $row_number = "Row_".$columns[26];
+    my $col_number = "Col_".$columns[27];
 
     for( my $i=0; $i<scalar(@traits); $i++) {
-        my $trait_col = $i + 17;
+        my $trait_col = $i + 30;
         #print STDERR "$row $trait_col\n";
         my $value = '';
         if ($columns[$trait_col]) {
